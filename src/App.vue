@@ -9,6 +9,7 @@
   import MHeader from 'components/m-header/m-header'
   import Tab from 'components/tab/tab'
 
+
   export default {
     components: {
       MHeader,
@@ -20,5 +21,4 @@
 <style scoped lang="stylus" rel="stylesheet/stylus">
   @import "common/stylus/variable";
 
-  
 </style>
