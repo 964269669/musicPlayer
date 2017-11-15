@@ -51,22 +51,23 @@
       // 获取轮播图总宽度
       _setSliderWidth() {
         this.children = this.$refs.sliderGroup.children
-        console.log(this.children.length)
         // 轮播图总宽度
         let width = 0
         // 外层父盒子宽度
         let sliderWidth = this.$refs.slider.clientWidth
         for (let i = 0; i < this.children.length; i++) {
           let child = this.children[i]
+          // console.log(child)
           // 给每个轮播图添加样式
           addClass(child, 'slider-item')
-          child.style.width = this.sliderWidth + 'px'
+          child.style.width = sliderWidth + 'px'
           // 轮播图总宽度
           width += sliderWidth
           // 如果是循环播放
-          /* if (this.loop) {
+          if (this.loop) {
             width += 2 * sliderWidth
-          } */
+          }
+          // 设置总宽度
           this.$refs.sliderGroup.style.width = width + 'px'
         }
       },
@@ -125,7 +126,7 @@
       white-space: nowrap
       .slider-item
         float: left
-        width: 375px
+        /*width: 375px*/
         box-sizing: border-box
         overflow: hidden
         text-align: center
