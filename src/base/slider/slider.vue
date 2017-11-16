@@ -33,7 +33,7 @@
       },
       interval: {
         type: Number,
-        default: 4000
+        default: 1000
       }
     },
     mounted() {
@@ -41,15 +41,26 @@
         this._setSliderWidth()
         this._initDots() // 初始化小圆点
         this._initSlider()
-
+        // 如果是自动播放 一进入页面就调用
         if (this.autoPlay) {
           this._play()
         }
       }, 20)
+
+      window.addEventListener('resize', () => {
+        // 如果slider还没初始化 什么也不做
+        if (!this.slider) {
+          return
+        }
+        // 参数用来标记是否resize
+        this._setSliderWidth(true)
+        // 宽度重新计算完刷新slider
+        this.slider.refresh()
+      })
     },
     methods: {
       // 获取轮播图总宽度
-      _setSliderWidth() {
+      _setSliderWidth(isResize) {
         this.children = this.$refs.sliderGroup.children
         // 轮播图总宽度
         let width = 0
@@ -57,19 +68,19 @@
         let sliderWidth = this.$refs.slider.clientWidth
         for (let i = 0; i < this.children.length; i++) {
           let child = this.children[i]
-          // console.log(child)
           // 给每个轮播图添加样式
           addClass(child, 'slider-item')
           child.style.width = sliderWidth + 'px'
           // 轮播图总宽度
           width += sliderWidth
-          // 如果是循环播放
-          if (this.loop) {
-            width += 2 * sliderWidth
-          }
-          // 设置总宽度
-          this.$refs.sliderGroup.style.width = width + 'px'
         }
+        // 如果是循环播放 BScroll会左右各克隆一个DOM(图片)
+        // 所以加两个宽度，但是resize的时候不能再加
+        if (this.loop && !isResize) {
+          width += 2 * sliderWidth
+        }
+        // 设置总宽度
+        this.$refs.sliderGroup.style.width = width + 'px'
       },
       // 初始化小圆点
       _initDots() {
@@ -84,34 +95,41 @@
           snap: true, // 是否允许捕捉元素
           snapLoop: this.loop,
           snapThreshold: 0.3, // 手指滑动时页面可切换的阈值，大于这个阈值可以滑动的下一页
-          snapSpeed: 400,
-          click: true
+          snapSpeed: 400
         })
-        // 绑定scrollEnd事件 处理当前显示的图片索引
+        // 绑定scrollEnd(BScroll中)事件 处理当前显示的图片索引
         this.slider.on('scrollEnd', () => {
+          // BScroll中的方法getCurrentPage().pageX
           let pageIndex = this.slider.getCurrentPage().pageX
-          /* if (this.loop) {
+          // 由于bscroll循环播放首尾各加一个,因此索引-1
+          if (this.loop) {
             pageIndex -= 1
-          } */
+          }
           this.currentPageIndex = pageIndex
+          // 如果是循环播放 再次调用this._paly()
           if (this.autoPlay) {
             clearTimeout(this.timer)
             this._play()
           }
         })
       },
-      // 自动轮播方法
+      // 轮播方法
       _play() {
-        let pageIndex = this.currentPageIndex
+         // currentPageIndex为不含首尾副本的索引，因此若循环要+1
+        let pageIndex = this.currentPageIndex + 1
         if (this.loop) {
           pageIndex += 1
         }
         this.timer = setTimeout(() => {
-          this.slider.goToPage(pageIndex, 0, 200)
+          // BScroll的方法 0 代表Y方向
+          this.slider.goToPage(pageIndex, 0, 400)
         }, this.interval)
       }
+    },
+    // 切换歌单触发destroyed  生命周期destroyed销毁清除定时器，有利于内存释放
+    destroyed() {
+      clearTimeout(this.timer)
     }
-
   }
 </script>
 

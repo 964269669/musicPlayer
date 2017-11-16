@@ -1,7 +1,7 @@
 import jsonp from 'common/js/jsonp'
 import {commonParams, options} from './config'
-// import axios from 'axios'
-
+import axios from 'axios'
+// 推荐数据方法
 export function getRecommend () {
   const url = 'https://c.y.qq.com/musichall/fcgi-bin/fcg_yqqhomepagerecommend.fcg'
 
@@ -13,9 +13,9 @@ export function getRecommend () {
   return jsonp(url, data, options)
 }
 
-/*
+// 歌单方法
 export function getDiscList() {
-  const url = '/api/getDiscList'
+  const url = 'api/getDiscList'
 
   const data = Object.assign({}, commonParams, {
     platform: 'yqq',
@@ -29,13 +29,14 @@ export function getDiscList() {
     format: 'json'
   })
 
+  // return jsonp(url, data, options)
   return axios.get(url, {
     params: data
   }).then((res) => {
     return Promise.resolve(res.data)
   })
 }
-
+/*
 export function getSongList(disstid) {
   const url = 'https://c.y.qq.com/qzone/fcg-bin/fcg_ucc_getcdinfo_byids_cp.fcg'
 
