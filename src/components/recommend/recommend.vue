@@ -34,6 +34,7 @@
       this._getDiscList()
     },
     methods: {
+      // 获得推荐(轮播图数据)
       _getRecommend () {
         getRecommend().then((res) => {
           if (res.code === ERR_OK) {
@@ -41,6 +42,7 @@
           }
         })
       },
+      // 获得歌单
       _getDiscList () {
         getDiscList().then((res) => {
           if (res.code === ERR_OK) {

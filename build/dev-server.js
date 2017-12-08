@@ -28,10 +28,10 @@ var apiRoutes = express.Router()
 // 从真实的QQ服务器地址通过axios发送一个http请求，修改referer和host
 apiRoutes.get('/getDiscList', function (req, res) {
   var url = 'https://c.y.qq.com/splcloud/fcgi-bin/fcg_get_diss_by_tag.fcg'
-
+  console.log(req.query)
   axios.get(url, {
     headers: {
-      referer: 'https://c.y.qq.com',
+      referer: 'https://c.y.qq.com/',
       host: 'c.y.qq.com'
     },
     params: req.query
