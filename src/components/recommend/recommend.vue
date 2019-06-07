@@ -20,8 +20,8 @@
 
 <script type="text/ecmascript-6">
   import Slider from 'base/slider/slider'
-  import {getRecommend, getDiscList} from 'api/recommend'
-  import {ERR_OK} from 'api/config'
+  import { getRecommend, getDiscList } from 'api/recommend'
+  import { ERR_OK } from 'api/config'
 
   export default {
     data() {
@@ -31,12 +31,13 @@
     },
     created() {
       this._getRecommend()
-      this._getDiscList()
+      // this._getDiscList()
     },
     methods: {
       // 获得推荐(轮播图数据)
       _getRecommend () {
         getRecommend().then((res) => {
+          console.log('推荐', res)
           if (res.code === ERR_OK) {
             this.recommends = res.data.slider
           }
