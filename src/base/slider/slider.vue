@@ -5,7 +5,7 @@
       </slot>
     </div>
     <div class="dots">
-      <span class="dot" v-for="(item, index) in dots" :class="{active: currentPageIndex === index}"></span>
+      <span class="dot" v-for="(item, index) in dots" :key="index" :class="{active: currentPageIndex === index}"></span>
     </div>
   </div>
 </template>
@@ -138,13 +138,13 @@
 
   .slider
     min-height: 1px
+    overflow hidden
     .slider-group
       position: relative
       overflow: hidden
       white-space: nowrap
       .slider-item
         float: left
-        /*width: 375px*/
         box-sizing: border-box
         overflow: hidden
         text-align: center

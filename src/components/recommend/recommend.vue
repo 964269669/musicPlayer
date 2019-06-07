@@ -3,7 +3,7 @@
     <div class="recommend-content">
       <div v-if="recommends.length" class="slider-wraper">
         <slider>
-          <div v-for="item in recommends">
+          <div v-for="item in recommends" :key="item.id">
             <a :href="item.linkUrl">
               <img :src="item.picUrl"/>
             </a>
@@ -18,12 +18,15 @@
   </div>
 </template>
 
-<script type="text/ecmascript-6">
+<script>
   import Slider from 'base/slider/slider'
   import { getRecommend, getDiscList } from 'api/recommend'
   import { ERR_OK } from 'api/config'
 
   export default {
+    components: {
+      Slider
+    },
     data() {
       return {
         recommends: []
@@ -53,14 +56,11 @@
           }
         })
       }
-    },
-    components: {
-      Slider
     }
   }
 </script>
 
-<style scoped lang="stylus" rel="stylesheet/stylus">
+<style scoped lang="stylus">
   @import "~common/stylus/variable";
 
 </style>
