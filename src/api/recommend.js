@@ -4,7 +4,6 @@ import axios from 'axios'
 // 推荐数据方法
 export function getRecommend () {
   const url = 'https://c.y.qq.com/musichall/fcgi-bin/fcg_yqqhomepagerecommend.fcg'
-
   const data = Object.assign({}, commonParams, {
     platform: 'h5',
     uin: 0,
@@ -12,29 +11,24 @@ export function getRecommend () {
   })
   return jsonp(url, data, options)
 }
-// 真实的
-// https://c.y.qq.com/splcloud/fcgi-bin/fcg_get_diss_by_tag.fcg?picmid=1&rnd=0.36105239212598095&g_tk=5381&jsonpCallback=getPlaylist&loginUin=0&hostUin=0&format=jsonp&inCharset=utf8&outCharset=utf-8&notice=0&platform=yqq&needNewCode=0&categoryId=10000000&sortId=5&sin=0&ein=29
-// 我的
-// https://c.y.qq.com/splcloud/fcgi-bin/fcg_get_diss_by_tag.fcg?g_tk=1928093487&inCharset=utf-8&outCharset=utf-8&notice=0&format=json&platform=yqq&hostUin=0&sin=0&ein=29&sortId=5&needNewCode=0&categoryId=10000000&rnd=0.18075909775566146
-// https://c.y.qq.com/splcloud/fcgi-bin/fcg_get_diss_by_tag.fcg?g_tk=5381&inCharset=utf-8&outCharset=utf-8&notice=0&format=jsonp&picmid=1&platform=yqq&loginUin=0&hostUin=0&sin=0&ein=29&sortId=5&needNewCode=0&categoryId=10000000&rnd=0.2984809062296139&jsonpCallback=__jp1
+
+// https://c.y.qq.com/splcloud/fcgi-bin/fcg_get_diss_by_tag.fcg?picmid=1&rnd=0.16698887020211894&g_tk=5381&loginUin=0&hostUin=0&format=json&inCharset=utf8&outCharset=utf-8&notice=0&platform=yqq.json&needNewCode=0&categoryId=10000000&sortId=5&sin=0&ein=19
 // 歌单方法
 export function getDiscList() {
   const url = 'api/getDiscList'
-
   const data = Object.assign({}, commonParams, {
     picmid: 1,
-    platform: 'yqq',
+    platform: 'yqq.json',
     loginUin: 0,
     hostUin: 0,
     sin: 0,
-    ein: 29,
+    ein: 19,
     sortId: 5,
     needNewCode: 0,
     categoryId: 10000000,
     rnd: Math.random(),
     format: 'json'
   })
-
   // return jsonp(url, data, options)
   return axios.get(url, {
     params: data
