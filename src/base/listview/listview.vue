@@ -23,6 +23,7 @@
         </uL>
       </li>
     </ul>
+    <!-- 右侧字母表 -->
     <div
       class="list-shortcut"
       @touchstart.stop.prevent="onShortcutTouchStart"
@@ -39,9 +40,11 @@
         >{{item}}</li>
       </ul>
     </div>
+    <!-- 固定标题 -->
     <div class="list-fixed" ref="fixed" v-show="fixedTitle">
       <div class="fixed-title">{{fixedTitle}}</div>
     </div>
+    <!-- 加载中组件 -->
     <div v-show="!data.length" class="loading-container">
       <loading></loading>
     </div>
@@ -67,6 +70,19 @@ export default {
       default: []
     }
   },
+  data() {
+    return {
+      scrollY: -1,
+      currentIndex: 0,
+      diff: -1
+    }
+  },
+  created() {
+    this.probeType = 3 // 要监听到better-scroll的实时滚动，不节流，probetype 得是3
+    this.listenScroll = true
+    this.touch = {}
+    this.listHeight = []
+  },
   computed: {
     shortcutList() {
       return this.data.map(group => {
@@ -88,6 +104,7 @@ export default {
     },
     scrollY(newY) {
       console.log(newY)
+      // newY 滚动的时候是负值
       const listHeight = this.listHeight
       // 当滚动到顶部，newY>0
       if (newY > 0) {
@@ -100,6 +117,7 @@ export default {
         let height2 = listHeight[i + 1]
         if (-newY >= height1 && -newY < height2) {
           this.currentIndex = i
+          // listHeight的上限 减去 滚动的距离 和fixedTitle的高度作对比
           this.diff = height2 + newY
           return
         }
@@ -107,8 +125,10 @@ export default {
       // 当滚动到底部，且-newY大于最后一个元素的上限
       this.currentIndex = listHeight.length - 2
     },
+    // listHeight的上限 减去 滚动的距离 和TITLE_HEIGHT的高度作对比
     diff(newVal) {
       let fixedTop = (newVal > 0 && newVal < TITLE_HEIGHT) ? newVal - TITLE_HEIGHT : 0
+      // 节流操作
       if (this.fixedTop === fixedTop) {
         return
       }
@@ -116,27 +136,11 @@ export default {
       this.$refs.fixed.style.transform = `translate3d(0,${fixedTop}px,0)`
     }
   },
-  data() {
-    return {
-      scrollY: -1,
-      currentIndex: 0,
-      diff: -1
-    }
-  },
-  created() {
-    this.probeType = 3
-    this.listenScroll = true
-    this.touch = {}
-    this.listHeight = []
-  },
   methods: {
     selectItem(item) {
       this.$emit('select', item)
     },
     onShortcutTouchStart(e) {
-      console.log(e)
-      console.log(e.target)
-      console.log(typeof e.target)
       let anchorIndex = getData(e.target, 'index')
       let firstTouch = e.touches[0]
       this.touch.y1 = firstTouch.pageY
@@ -146,7 +150,7 @@ export default {
     onShortcutTouchMove(e) {
       let firstTouch = e.touches[0]
       this.touch.y2 = firstTouch.pageY
-      // | 是位运算符，  下面这样写相当于Math.floor
+      // | 是位运算符， 下面这样写相当于Math.floor
       let delta = (this.touch.y2 - this.touch.y1) / ANCHOR_HEIGHT | 0
       // delta 计算出来 相当于滑动到了第几个字母(是相对的，还得加上开始位置是第几个才是当前位置实际是第几个字母)
       let anchorIndex = parseInt(this.touch.anchorIndex) + delta

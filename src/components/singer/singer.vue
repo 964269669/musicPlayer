@@ -42,6 +42,7 @@
           }
         }
         list.forEach((item, index) => {
+          // 前十条数据作为热门的数据
           if (index < HOT_SINGER_LEN) {
             map.hot.items.push(new Singer({
               name: item.Fsinger_name,
@@ -71,6 +72,7 @@
             hot.push(val)
           }
         }
+        // 按字母表小到大排
         ret.sort((a, b) => {
           return a.title.charCodeAt(0) - b.title.charCodeAt(0)
         })
