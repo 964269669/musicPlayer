@@ -1,4 +1,4 @@
-/*import {mapGetters, mapMutations, mapActions} from 'vuex'
+import {mapGetters, mapMutations, mapActions} from 'vuex'
 import {playMode} from 'common/js/config'
 import {shuffle} from 'common/js/util'
 
@@ -121,4 +121,3 @@ export const searchMixin = {
     ])
   }
 }
-*/

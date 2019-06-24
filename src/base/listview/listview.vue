@@ -56,7 +56,7 @@ import Scroll from 'base/scroll/scroll'
 import Loading from 'base/loading/loading'
 import {getData} from 'common/js/dom'
 
-const TITLE_HEIGHT = 30
+const TITLE_HEIGHT = 30 // 左侧列表每个标题高度
 const ANCHOR_HEIGHT = 18 // 每个字母所在的li的高度 上线padding+fontsize
 
 export default {
@@ -103,7 +103,6 @@ export default {
       }, 20)
     },
     scrollY(newY) {
-      console.log(newY)
       // newY 滚动的时候是负值
       const listHeight = this.listHeight
       // 当滚动到顶部，newY>0
@@ -172,6 +171,8 @@ export default {
         height += item.clientHeight
         this.listHeight.push(height)
       }
+      console.log(this.listHeight)
+      console.log(list.length)
     },
     _scrollTo(index) {
       if (!index && index !== 0) {

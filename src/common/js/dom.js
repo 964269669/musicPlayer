@@ -14,6 +14,7 @@ export function addClass(el, className) {
   el.className = newClass.join(' ')
 }
 
+// 获取标签上的自定义属性  data-开头
 export function getData(el, name, val) {
   const prefix = 'data-'
   if (val) {
@@ -32,13 +33,11 @@ let vendor = (() => {
     ms: 'msTransform',
     standard: 'transform'
   }
-
   for (let key in transformNames) {
     if (elementStyle[transformNames[key]] !== undefined) {
       return key
     }
   }
-
   return false
 })()
 

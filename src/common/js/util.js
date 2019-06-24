@@ -1,7 +1,9 @@
-/*function getRandomInt(min, max) {
+// 获取随机数
+function getRandomInt(min, max) {
   return Math.floor(Math.random() * (max - min + 1) + min)
 }
 
+// 打乱数组
 export function shuffle(arr) {
   let _arr = arr.slice()
   for (let i = 0; i < _arr.length; i++) {
@@ -24,4 +26,4 @@ export function debounce(func, delay) {
       func.apply(this, args)
     }, delay)
   }
-}*/
+}
