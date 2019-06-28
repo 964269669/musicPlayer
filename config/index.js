@@ -8,6 +8,7 @@ const path = require('path')
 module.exports = {
   build: {
     env: require('./prod.env'),
+    port: 9000,
     index: path.resolve(__dirname, '../dist/index.html'),
     assetsRoot: path.resolve(__dirname, '../dist'),
     assetsSubDirectory: 'static',
@@ -27,7 +28,7 @@ module.exports = {
   },
   dev: {
     env: require('./dev.env'),
-    port: process.env.PORT || 8090,
+    port: process.env.PORT || 9000,
     autoOpenBrowser: true,
     assetsSubDirectory: 'static',
     assetsPublicPath: '/',
