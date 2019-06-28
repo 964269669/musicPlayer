@@ -1,4 +1,4 @@
-/*import storage from 'good-storage'
+import storage from 'good-storage'
 
 const SEARCH_KEY = '__search__'
 const SEARCH_MAX_LEN = 15
@@ -31,6 +31,7 @@ function deleteFromArray(arr, compare) {
 }
 
 export function saveSearch(query) {
+  // 如果没有 SEARCH_KEY  默认值为空数组
   let searches = storage.get(SEARCH_KEY, [])
   insertArray(searches, query, (item) => {
     return item === query
@@ -91,5 +92,3 @@ export function deleteFavorite(song) {
 export function loadFavorite() {
   return storage.get(FAVORITE_KEY, [])
 }
-
-*/
